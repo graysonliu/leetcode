@@ -38,23 +38,36 @@ struct TreeNode {
     TreeNode(int x, TreeNode *left, TreeNode *right) : val(x), left(left), right(right) {}
 };
 
+#include <vector>
 
 class BSTIterator {
-    TreeNode *r;
+    // should be an iterative version of in-order traverse
+    // see 0094
+    std::vector<TreeNode *> stack;
+
 public:
     BSTIterator(TreeNode *root) {
-        r = root;
+        traverse_leftmost(root);
+    }
+
+    void traverse_leftmost(TreeNode *node) {
+        while (node) {
+            stack.push_back(node);
+            node = node->left;
+        }
     }
 
     /** @return the next smallest number */
     int next() {
-//        if (r->left)
-//
+        TreeNode *node = stack.back();
+        stack.pop_back();
+        traverse_leftmost(node->right);
+        return node->val;
     }
 
     /** @return whether we have a next smallest number */
     bool hasNext() {
-
+        return !stack.empty();
     }
 };
 
@@ -64,10 +77,3 @@ public:
  * int param_1 = obj->next();
  * bool param_2 = obj->hasNext();
  */
-
-#include <iostream>
-
-int main() {
-    std::cout << "Hello, World!" << std::endl;
-    return 0;
-}

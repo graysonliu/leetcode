@@ -18,6 +18,7 @@ from typing import List
 
 class Solution:
     def preorderTraversal(self, root: TreeNode) -> List[int]:
+        # compare with 0094
         res = []
 
         # recursive version
