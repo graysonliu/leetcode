@@ -24,7 +24,6 @@ Output: 3
 */
 
 #include <vector>
-#include <queue>
 
 using namespace std;
 
