@@ -1,3 +1,6 @@
+import queue
+
+
 class ListNode:
     def __init__(self, val=0, next=None):
         self.val = val
@@ -20,6 +23,25 @@ class Node:
         self.next = next
 
 
+def list_to_tree(vals):
+    Q = queue.Queue()
+    root = TreeNode(vals[0])
+    Q.put(root)
+    i = 1
+    while not Q.empty() and i < len(vals):
+        node = Q.get()
+        if node:
+            left = TreeNode(vals[i]) if vals[i] is not None else None
+            right = TreeNode(vals[i + 1]) if i + 1 < len(vals) and vals[i + 1] is not None else None
+            node.left, node.right = left, right
+            if left:
+                Q.put(left)
+            if right:
+                Q.put(right)
+            i += 2
+    return root
+
+
 def str_to_linked_list(s):
     nums = s.split('->')
     dummy = ListNode(0)
@@ -36,3 +58,6 @@ def linked_list_to_str(p):
         nums.append(str(p.val))
         p = p.next
     return '->'.join(nums)
+
+
+list_to_tree([5, 3, 6, 2, 4, None, None, 1])
