@@ -1,5 +1,5 @@
 cmake-build-debug
-0000_test*
+0000*
 CMakeLists.txt
 .idea
 utils/__pycache__

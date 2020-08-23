@@ -58,6 +58,3 @@ def linked_list_to_str(p):
         nums.append(str(p.val))
         p = p.next
     return '->'.join(nums)
-
-
-list_to_tree([5, 3, 6, 2, 4, None, None, 1])

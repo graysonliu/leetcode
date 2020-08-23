@@ -36,14 +36,10 @@ class Solution:
                 return
             if len(self.path_p) > 0 and len(self.path_q) > 0:  # we have found paths to p and q, no more recursion
                 return
-            if root.val == p.val:
-                path.append(root)
-                self.path_p = path.copy()
-                path.pop()
-            elif root.val == q.val:
-                path.append(root)
-                self.path_q = path.copy()
-                path.pop()
+            if root == p:
+                self.path_p = path + [root]
+            elif root == q:
+                self.path_q = path + [root]
             # using append() and pop() for path before and after recursion invocation
             # rather than using path+[root] in recursion invocation directly
             # this will significantly improve the performance
@@ -59,6 +55,3 @@ class Solution:
             if self.path_p[i] == self.path_q[i]:
                 res = self.path_p[i]
         return res
-
-
-Solution().lowestCommonAncestor(list_to_tree([3, 5, 1, 6, 2, 0, 8, None, None, 7, 4]), TreeNode(7), TreeNode(4))
