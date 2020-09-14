@@ -28,4 +28,5 @@ class Solution:
                     dp[i] = max(dp[i], dp[j] + 1)
         return max(dp)
         # the algorithm above is of O(n^2) time complexity
-        # note: there is a tricky O(nlogn) solution, see 4th approach in Leetcode's official solution
+        # note: there is a tricky O(nlogn) solution, see 4th approach in Leetcode's official solution (or #0334)
+        # https://leetcode.com/problems/longest-increasing-subsequence/solution/

@@ -51,5 +51,29 @@ class Solution:
             max_profit = profit if profit > max_profit else max_profit
         return max_profit
 
+        # state machine approach inspired by #0309
+        # s0: haven't bought any stock
+        # s1: stock on hand
+        # s2: stock sold, cannot buy stock anymore
+        # s0 --rest--> s0
+        # s0 --buy--> s1
+        # s1 --rest--> s1
+        # s1 --sell--> s2
+        # s2 --rest--> s2
+        # s0[i]=s0[i-1], so we don't need to update the balance value of s0 since it won't change
+        # s1[i]=max(s1[i-1], s0[i-1]-prices[i])
+        # s2[i]=max(s2[i-1], s1[i-1]+prices[i])
+        if len(prices) == 0:
+            return 0
+        # initialization on day 0
+        s0_balance = 0
+        s1_balance = -prices[0]
+        # the state at the first day cannot be s2
+        # we make s2_balance small enough so that the next state cannot be transferred from s2
+        s2_balance = -float('inf')
+        for i in range(1, len(prices)):  # for day i
+            s1_balance, s2_balance = max(s1_balance, s0_balance - prices[i]), max(s2_balance, s1_balance + prices[i])
+        return max(s0_balance, s2_balance)
+
 
 print(Solution().maxProfit([7, 6, 4, 3, 1]))

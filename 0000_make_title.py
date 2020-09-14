@@ -6,4 +6,4 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("306. Additive Number"))
+print(make_title("350. Intersection of Two Arrays II"))
