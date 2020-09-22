@@ -6,4 +6,13 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("350. Intersection of Two Arrays II"))
+print(make_title("373. Find K Pairs with Smallest Sums"))
+
+
+def make_title_for_blog(s):
+    s = [c if c.isalnum() else ' ' for c in s.lower()]
+    from datetime import date
+    return str(date.today()) + '-' + '-'.join(''.join(s).split())
+
+
+print(make_title_for_blog('Lazy Evaluation & Late Binding: Unexpected Behavior of Iterables in Python'))

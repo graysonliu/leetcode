@@ -23,7 +23,7 @@ class Solution:
         left, right = 0, math.ceil(x / 2)
         while left <= right:
             mid = left + (right - left) // 2
-            if mid == 0 or mid <= x / mid:
+            if mid == 0 or mid <= x / mid:  # the divisor cannot be 0
                 if (mid + 1) > x / (mid + 1):
                     return mid
                 else:
