@@ -1,32 +1,44 @@
-# coding=utf-8
-# Given an array of integers, return indices of the two numbers such that they add up to a specific target.
+# Given an array of integers nums and an integer target, return indices of the two numbers such that they add up to target.
 #
 # You may assume that each input would have exactly one solution, and you may not use the same element twice.
 #
-# Example:
-# Given nums = [2, 7, 11, 15], target = 9,
+# You can return the answer in any order.
 #
-# Because nums[0] + nums[1] = 2 + 7 = 9,
-# return [0, 1].
+#
+#
+# Example 1:
+#
+# Input: nums = [2,7,11,15], target = 9
+# Output: [0,1]
+# Output: Because nums[0] + nums[1] == 9, we return [0, 1].
+# Example 2:
+#
+# Input: nums = [3,2,4], target = 6
+# Output: [1,2]
+# Example 3:
+#
+# Input: nums = [3,3], target = 6
+# Output: [0,1]
+#
+#
+# Constraints:
+#
+# 2 <= nums.length <= 10^5
+# -10^9 <= nums[i] <= 10^9
+# -10^9 <= target <= 10^9
+# Only one valid answer exists.
+from typing import List
 
-class Solution(object):
-    def twoSum(self, nums, target):
-        """
-        :type nums: List[int]
-        :type target: int
-        :rtype: List[int]
-        """
-        # 这里的思想，将元素逐个加入到查找字典中
-        # 由于没有两个元素相同，我们可以将值作为字典的key
-        lookup = {}
-        # enumerate()的用法，生成枚举对象，next()函数返回(count, value)元组
-        # enumerate()返回的枚举对象是一个迭代器，即为一个惰性计算的序列，生成迭代器过程中不需要遍历整个list
+
+class Solution:
+    def twoSum(self, nums: List[int], target: int) -> List[int]:
+        # put already scanned numbers in a dict, the value of the number is the key, the index is the value
+        d = {}
         for i, num in enumerate(nums):
-            # 判断list/tuple/set中是否存在某元素，判断dict中是否存在某key，直接用关键字in
-            if target - num in lookup:
-                return [lookup[target - num], i]
-            lookup[num] = i
+            if target - num in d:  # check if we scanned target-num
+                return [d[target - num], i]
+            d[num] = i
+        pass
 
 
-if __name__ == '__main__':
-    print(Solution().twoSum((2, 7, 11, 15), 9))
+print(Solution().twoSum([2, 7, 11, 15], 9))
