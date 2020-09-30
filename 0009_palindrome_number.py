@@ -16,40 +16,17 @@
 # Explanation: Reads 01 from right to left. Therefore it is not a palindrome.
 # Follow up:
 #
-# Coud you solve it without converting the integer to a string?
+# Could you solve it without converting the integer to a string?
 
 class Solution:
-    def isPalindrome(self, x):
-        """
-        :type x: int
-        :rtype: bool
-        """
+    def isPalindrome(self, x: int) -> bool:
         if x < 0:
             return False
-        # 不转成字符串的方法
-        rev = 0
-        temp = x
-
-        while temp != 0:
-            temp, remainder = divmod(temp, 10)
-            rev = 10 * rev + remainder
-
-        return x == rev
-
-    def isPalindrome1(self, x):
-        """
-        :type x: int
-        :rtype: bool
-        """
-        # 转字符串的方法
-        s = str(x)
-        return s == s[::-1]
-
-    # 一行代码
-    # return str(x) == str(x)[::-1]
-    # 不过str()被调用了两次，耗时长
+        reverse, original_x = 0, x
+        while x != 0:
+            x, digit = divmod(x, 10)
+            reverse = reverse * 10 + digit
+        return original_x == reverse
 
 
-
-if __name__ == '__main__':
-    print(Solution().isPalindrome(121))
+print(Solution().isPalindrome(121))

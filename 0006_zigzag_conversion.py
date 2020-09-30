@@ -1,4 +1,3 @@
-# coding=utf-8
 # The string "PAYPALISHIRING" is written in a zigzag pattern on a given number of rows like this: (you may want to display this pattern in a fixed font for better legibility)
 #
 # P   A   H   N
@@ -25,40 +24,20 @@
 # P     I
 
 class Solution:
-    def convert(self, s, numRows):
-        """
-        :type s: str
-        :type numRows: int
-        :rtype: str
-        """
-        """
-        0              2n-2               4n-4
-        1         2n-3 2n-1          4n-5 4n-3    
-        .       .      .           .      .
-        .     .        .         .        .
-        n-2 n          3n-4 3n-2          5n-6
-        n-1            3n-3               5n-5
-        Z字型表为数组元素的索引，不考虑斜线上的元素，每一行的元素都是公差为2n-2等差数列
-        而斜线上元素的索引等于同一行在它之后的元素索引减去2*(行号-1)
-        例如上面的第二行，2n-3=(2n-1)-2*(2-1)，再例如第n-1行，n=(3n-4)-2*(n-1-1)
-        """
-        # 空字符串判断，s=''时其真值为False
-        if not s or numRows == 1:
+    def convert(self, s: str, numRows: int) -> str:
+        if numRows == 1:
             return s
+        rows = [[] for _ in range(numRows)]  # do not use [[]]*numRows, since all row refers to the same list
+        r, step = 0, 1
+        for c in s:
+            rows[r].append(c)
+            if r == 0:
+                step = 1
+            elif r == numRows - 1:
+                step = -1
+            r += step
 
-        str_to_print = str()
-
-        # i表示行号
-        for i in range(0, numRows):
-            # j记录公差为2n-2的等差数列
-            for j in range(i, len(s), 2 * numRows - 2):
-                str_to_print += s[j]
-                # 若不是第一行和最后一行，则中间存在斜线上的元素，此时还需要判断是否越界
-                if i != 0 and i != numRows - 1 and j + (2 * numRows - 2) - (2 * i) < len(s):
-                    str_to_print += s[j + (2 * numRows - 2) - (2 * i)]
-
-        return str_to_print
+        return ''.join(map(lambda row: ''.join(row), rows))
 
 
-if __name__ == "__main__":
-    print(Solution().convert("PAYPALISHIRING", 3))
+print(Solution().convert("PAYPALISHIRING", 3))
