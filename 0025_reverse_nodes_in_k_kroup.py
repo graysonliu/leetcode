@@ -1,72 +1,69 @@
 # Given a linked list, reverse the nodes of a linked list k at a time and return its modified list.
 #
-# k is a positive integer and is less than or equal to the length of the linked list.
-# If the number of nodes is not a multiple of k then left-out nodes in the end should remain as it is.
+# k is a positive integer and is less than or equal to the length of the linked list. If the number of nodes is not a multiple of k then left-out nodes, in the end, should remain as it is.
 #
-# Example:
+# Follow up:
 #
-# Given this linked list: 1->2->3->4->5
-#
-# For k = 2, you should return: 2->1->4->3->5
-#
-# For k = 3, you should return: 3->2->1->4->5
-#
-# Note:
-#
-# Only constant extra memory is allowed.
+# Could you solve the problem in O(1) extra memory space?
 # You may not alter the values in the list's nodes, only nodes itself may be changed.
+#
+#
+# Example 1:
+#
+#
+# Input: head = [1,2,3,4,5], k = 2
+# Output: [2,1,4,3,5]
+# Example 2:
+#
+#
+# Input: head = [1,2,3,4,5], k = 3
+# Output: [3,2,1,4,5]
+# Example 3:
+#
+# Input: head = [1,2,3,4,5], k = 1
+# Output: [1,2,3,4,5]
+# Example 4:
+#
+# Input: head = [1], k = 1
+# Output: [1]
+#
+#
+# Constraints:
+#
+# The number of nodes in the list is in the range sz.
+# 1 <= sz <= 5000
+# 0 <= Node.val <= 1000
+# 1 <= k <= sz
 
-# Definition for singly-linked list.
-class ListNode:
-    def __init__(self, x):
-        self.val = x
-        self.next = None
+from utils import *
 
 
 class Solution:
-    def reverseKGroup(self, head, k):
-        """
-        :type head: ListNode
-        :type k: int
-        :rtype: ListNode
-        """
-        p = head
-        for _ in range(k):
-            try:
+    def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        dummy = ListNode(0)
+        group_pre, dummy.next = dummy, head
+        while group_pre:
+            p = group_pre
+            for _ in range(k):  # check if there are still k nodes after group_pre
                 p = p.next
-            except AttributeError:  # 该组的结点数不够k个，无需翻转，返回头结点
-                return head
+                if p is None:  # it does not have k nodes to form a group, meaning this is the ending group
+                    return dummy.next
+            # did not return, meaning this group has k nodes, we do the reversing
+            group_start, pre = group_pre.next, None
+            cur = group_start
+            for _ in range(k):
+                next_cur = cur.next
+                cur.next = pre
+                pre = cur
+                cur = next_cur
+            # after the iteration, pre is the last node in the group
+            # but it right now leads the group because of reversing
+            group_pre.next = pre
 
-        cur = head
-        pre = None  # pre为cur前面的一个结点
-        for _ in range(k):  # 翻转
-            nxt = cur.next
-            cur.next = pre
-            pre = cur
-            cur = nxt
+            # group_start is the last node of this group after reversing
+            group_start.next = cur  # after iteration, cur is the start of the next group
 
-        head.next = self.reverseKGroup(cur, k)  # 递归，头结点head已经变成了该组最后面的尾结点
-        return pre  # pre为之前该组的尾结点，翻转后变为该组的头结点
-
-
-def list_to_node(nums):
-    dummy = ListNode(0)
-    p = dummy
-    for num in nums:
-        p.next = ListNode(num)
-        p = p.next
-    return dummy.next
+            group_pre = group_start
 
 
-def node_to_list(p):
-    nums = []
-    while p:
-        nums.append(p.val)
-        p = p.next
-    return nums
-
-
-if __name__ == "__main__":
-    h = list_to_node([1, 2, 3, 4, 5])
-    h = Solution().reverseKGroup(h, 4)
-    print(node_to_list(h))
+print(linked_list_to_str(Solution().reverseKGroup(str_to_linked_list('1->2->3->4->5'), 1)))
