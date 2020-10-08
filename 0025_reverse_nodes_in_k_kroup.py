@@ -40,9 +40,10 @@ from utils import *
 
 class Solution:
     def reverseKGroup(self, head: ListNode, k: int) -> ListNode:
+        # I don't use recursion here since the recursion stack cannot be considered as O(1) space
         dummy = ListNode(0)
         group_pre, dummy.next = dummy, head
-        while group_pre:
+        while True:
             p = group_pre
             for _ in range(k):  # check if there are still k nodes after group_pre
                 p = p.next

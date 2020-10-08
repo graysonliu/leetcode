@@ -37,21 +37,19 @@
 #     print(nums[i]);
 # }
 
+from typing import List
+
+
 class Solution:
-    def removeElement(self, nums, val):
-        """
-        :type nums: List[int]
-        :type val: int
-        :rtype: int
-        """
-        # 用首尾两个指针
-        p1, p2 = 0, len(nums) - 1
-        while p1 <= p2:
-            if nums[p1] == val:
-                if nums[p2] != val:  # 如果p2位置的元素不为val，则将这个元素提到前面
-                    nums[p1] = nums[p2]
-                    p1 += 1  # 只有p2位置的元素不为val时p1才右移
-                p2 -= 1  # p2左移
-            else:  # nums[p1] != val
-                p1 += 1
-        return p1
+    def removeElement(self, nums: List[int], val: int) -> int:
+        # similar to #0026
+        # use two pointers
+        i = 0
+        for j in range(len(nums)):
+            if nums[j] != val:
+                nums[i] = nums[j]
+                i += 1
+        return i
+
+
+print(Solution().removeElement([0, 1, 2, 2, 3, 0, 4, 2], 2))

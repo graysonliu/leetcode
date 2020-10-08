@@ -1,4 +1,4 @@
-# Given a sorted array nums, remove the duplicates in-place such that each element appear only once and return the new length.
+# Given a sorted array nums, remove the duplicates in-place such that each element appears only once and returns the new length.
 #
 # Do not allocate extra space for another array, you must do this by modifying the input array in-place with O(1) extra memory.
 #
@@ -20,7 +20,7 @@
 #
 # Confused why the returned value is an integer but your answer is an array?
 #
-# Note that the input array is passed in by reference, which means modification to the input array will be known to the caller as well.
+# Note that the input array is passed in by reference, which means a modification to the input array will be known to the caller as well.
 #
 # Internally you can think of this:
 #
@@ -33,33 +33,18 @@
 #     print(nums[i]);
 # }
 
+from typing import List
+
+
 class Solution:
-    def removeDuplicates(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        if not nums:
-            return 0
-        if len(nums) == 1:
-            return 1
-        p1 = p2 = 1
-        while p2 < len(nums):
-            if nums[p2] != nums[p2 - 1]:
-                nums[p1] = nums[p2]
-                p1 += 1
-            p2 += 1
-        return p1
-
-    # 这方法看哭了
-    def removeDuplicates1(self, nums):
-        """
-        :type nums: List[int]
-        :rtype: int
-        """
-        nums[:] = sorted(list(set(nums)))  # 注意是nums[:]而不是nums，题目要求nums的地址不变
-        return len(nums)
+    def removeDuplicates(self, nums: List[int]) -> int:
+        # dual pointers
+        i = 0
+        for j in range(len(nums)):
+            if j == 0 or nums[j] != nums[j - 1]:
+                nums[i] = nums[j]
+                i += 1
+        return i
 
 
-if __name__ == "__main__":
-    print(Solution().removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
+print(Solution().removeDuplicates([0, 0, 1, 1, 1, 2, 2, 3, 3, 4]))
