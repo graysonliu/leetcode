@@ -1,45 +1,82 @@
 # Implement next permutation, which rearranges numbers into the lexicographically next greater permutation of numbers.
 #
-# If such arrangement is not possible, it must rearrange it as the lowest possible order (ie, sorted in ascending order).
+# If such an arrangement is not possible, it must rearrange it as the lowest possible order (i.e., sorted in ascending order).
 #
-# The replacement must be in-place and use only constant extra memory.
+# The replacement must be in place and use only constant extra memory.
 #
-# Here are some examples. Inputs are in the left-hand column and its corresponding outputs are in the right-hand column.
 #
-# 1,2,3 → 1,3,2
-# 3,2,1 → 1,2,3
-# 1,1,5 → 1,5,1
+#
+# Example 1:
+#
+# Input: nums = [1,2,3]
+# Output: [1,3,2]
+# Example 2:
+#
+# Input: nums = [3,2,1]
+# Output: [1,2,3]
+# Example 3:
+#
+# Input: nums = [1,1,5]
+# Output: [1,5,1]
+# Example 4:
+#
+# Input: nums = [1]
+# Output: [1]
+#
+#
+# Constraints:
+#
+# 1 <= nums.length <= 100
+# 0 <= nums[i] <= 100
+from typing import List
+
 
 class Solution:
-    def nextPermutation(self, nums):
+    def nextPermutation(self, nums: List[int]) -> None:
         """
-        :type nums: List[int]
-        :rtype: void Do not return anything, modify nums in-place instead.
+        Do not return anything, modify nums in-place instead.
         """
-        len_nums = len(nums)
-
-        if len_nums <= 1:
-            return
-            # return nums
-
-        swap = False
-        for i in range(len_nums - 1, 0, -1):  # 从后往前，找到第一个比它右边紧邻的数小的数nums[i-1]
-            if nums[i - 1] < nums[i]:
-                swap = True
-                for j in range(len_nums - 1, i - 1, -1):  # 找到该数字右边比它大的最小数nums[j]，因为右边是递减的，所以直接从后往前找
-                    if nums[j] > nums[i - 1]:
-                        break
+        # [... m, ... n, ...]
+        # next permutation should be larger than current permutation
+        # we should swap a pair of numbers (m, n) that satisfy m<n and m is to the left of n, so that after the swapping, the permutation is larger
+        # we also need to guarantee that after the swapping we get the smallest possible permutation that is larger than current permutation, which is the definition of 'next'
+        # so, we look for this pair (m, n) for the right to the left
+        # from right to left, we need to find the first number satisfying that there exists another number on its right that is larger than it
+        # that first number is the m we want
+        maximum = -float('inf')
+        m = None
+        for i in range(len(nums) - 1, -1, -1):
+            if nums[i] < maximum:
+                m = i  # m is the index rather than the actual number
                 break
+            else:
+                maximum = nums[i]
+        # if we think it thoroughly, this can also be achieve by find the first number that is smaller than the adjacent number on its right from the right to the left
 
-        if swap:
-            nums[j], nums[i - 1] = nums[i - 1], nums[j]  # 交换两个数字
-        else:  # swap为False，表示整个序列从左往右递减，该序列为最大的全排列
-            i = i - 1
+        # then, we need to find n, n should be the smallest number that is larger than m on its right
+        # maximum is the largest number on m's right, but maximum is not necessarily n
+        # there could be another number on m's right and it is larger than m but smaller than maximum
+        # since m is the first number that is smaller than some number on its right
+        # all numbers on m's right is actually in a descending order
+        # therefore, we search n from the right to the left, meaning we start from the smallest
+        # the first number that we encounter and larger than m is the number n we want
+        if m is not None:
+            for i in range(len(nums) - 1, m, -1):
+                if nums[i] > nums[m]:
+                    n = i
+                    break
+            # swap
+            nums[m], nums[n] = nums[n], nums[m]
 
-        nums[i:] = nums[i:][::-1]  # nums[i-1]右侧数字颠倒
-        return
-        # return nums
+        # after the swapping, it is still not done yet
+        # the permutation becomes [... n, ... m, ...] and all numbers on n's right are in a descending order
+        # to get the smallest next permutation, we should reverse all numbers on n's right, that is nums[n+1:]
+        # if such (m, n) dose not exist, meaning the current permutation is already the largest permutation, we should reverse the whole list
+        lo, hi = m + 1 if m is not None else 0, len(nums) - 1
+        # m is the index, current nums[m] is actually nums[n] before the swapping
+        while lo < hi:
+            nums[lo], nums[hi] = nums[hi], nums[lo]
+            lo, hi = lo + 1, hi - 1
 
 
-if __name__ == '__main__':
-    print(Solution().nextPermutation([2, 3, 1, 3, 3]))
+Solution().nextPermutation([1, 3, 2])
