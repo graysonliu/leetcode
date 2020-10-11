@@ -65,7 +65,7 @@ class Solution:
         # to the added pair, the pair on its right and the pair below it should be considered
         # but that is not always the case, the previous example, after we add M[0][1] to res
         # we only put M[0][2] into the heap as the new candidate
-        # because the pair below M[0][1], which is M[1][1], is surely smaller than M[1][0], which is already a candidate
+        # because the pair below M[0][1], which is M[1][1], is surely larger than M[1][0], which is already a candidate
         # so, for each row, it can have at most one candidate, and it should be the leftmost '?'
         # for each column, it can have at most one candidate, and it should be the topmost '?'
         # we have to maintain two list, one for row, and one for columns

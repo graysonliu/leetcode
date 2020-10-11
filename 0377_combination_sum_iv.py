@@ -67,13 +67,13 @@ class Solution:
         # a better accepted solution
         # imagine the last number of a valid combination is nums[i]
         # then, we have comb(target-nums[i]) combinations that satisfy this specific situation
-        # so, we just have to add up all comb(target-nums[i]) for all nums[i]
+        # so, we just have to add up all comb(target-nums[i]) for any nums[i] in nums, the summation is comb(target)
         dp = [0] * (target + 1)
         dp[0] = 1  # no element in the combination, an empty combination is valid for target=0
-        for i in range(1, target + 1):
+        for t in range(1, target + 1):
             for num in nums:
-                if i - num >= 0:
-                    dp[i] += dp[i - num]
+                if t - num >= 0:
+                    dp[t] += dp[t - num]
         return dp[target]
 
         pass
