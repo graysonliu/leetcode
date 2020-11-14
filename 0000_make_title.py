@@ -6,7 +6,7 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("378. Kth Smallest Element in a Sorted Matrix"))
+print(make_title("385. Mini Parser"))
 
 
 def make_title_for_blog(s):
@@ -15,4 +15,4 @@ def make_title_for_blog(s):
     return str(date.today()) + '-' + '-'.join(''.join(s).split())
 
 
-print(make_title_for_blog('Lazy Evaluation & Late Binding: Unexpected Behavior of Iterables in Python'))
+print(make_title_for_blog('Some Random Stuff on Javascript'))
