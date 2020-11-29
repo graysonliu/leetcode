@@ -36,17 +36,16 @@ class Solution:
 
         # sliding window
         left, right = 0, 0
-        window = {s[0]}
+        window = {s[0]}  # set
         res = 1
         while right + 1 < len(s):
-            if s[right + 1] not in window:
-                window.add(s[right + 1])
-                right += 1
-                res = max(res, right - left + 1)
-            else:
-                while s[right + 1] in window:
-                    window.remove(s[left])
-                    left += 1
+            while s[right + 1] in window:
+                window.remove(s[left])
+                left += 1
+            window.add(s[right + 1])
+            right += 1
+            res = max(res, right - left + 1)
+
         return res
 
 

@@ -62,12 +62,12 @@ class Solution:
 
             if j == len(p):  # we reach the end of p, p[j:] is empty
                 cache[i, j] = i == len(s)  # if there is a match, s[i:] must also be empty
-            else:
+            else:  # p[j:] is not empty
                 # compare first character
                 # if s[i:] is empty, first_match should be false
                 first_matched = i != len(s) and (s[i] == p[j] or p[j] == '.')
-                # if first characters do not match, s[i:] and p[j:] could still match if there is a '*' following p[j]
 
+                # if first characters do not match, s[i:] and p[j:] could still match if there is a '*' following p[j]
                 # if there is a '*' following p[j]
                 if j + 1 < len(p) and p[j + 1] == '*':
                     # two situations
@@ -75,7 +75,7 @@ class Solution:
                     # p[j] repeats multiple times, in this case the first character must match, i->i+1, j->j
                     cache[i, j] = match(i, j + 2) or (first_matched and match(i + 1, j))
 
-                # it the following character of p[j] is not '*', i->i+1, j->j+1
+                # if the following character of p[j] is not '*', i->i+1, j->j+1
                 else:
                     cache[i, j] = first_matched and match(i + 1, j + 1)
 

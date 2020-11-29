@@ -21,6 +21,7 @@
 
 class Solution:
     def longestSubstring(self, s: str, k: int) -> int:
+        # similar to #0003, consider using slide window on substring problems
         if k <= 1:
             return len(s)
         res = 0
@@ -35,28 +36,30 @@ class Solution:
             left = 0
             right = -1
             count = defaultdict(int)
-            while True:
-                if window_unique <= u:  # expand the window on the right
-                    if right == len(s) - 1:
-                        break  # we cannot expand the window anymore
-                    right += 1
-                    c = s[right]
-                    if count[c] == 0:
-                        window_unique += 1
-                    count[c] += 1
-                else:  # shrink the window on the left
-                    c = s[left]
-                    if count[c] == 1:
-                        window_unique -= 1
-                    count[c] -= 1
-                    left += 1
-                if window_unique == u:
+            while right + 1 < len(s):
+                # we try to expand the slide window on the right
+                # if s[right+1] not in count, but we already have u unique letters within the window
+                # we cannot expand without shrinking first
+                # because that would make the substring have more than u unique letters
+                # we should shrink the slide window on the left
+                # until the number of unique letters in the window is less than u
+                if s[right + 1] not in count and len(count) == u:
+                    while len(count) == u:
+                        c = s[left]
+                        count[c] -= 1
+                        if count[c] == 0:
+                            count.pop(c)
+                        left += 1
+                c = s[right + 1]
+                count[c] += 1
+                right += 1
+
+                if len(count) == u:  # this substring should have exactly u unique letters
                     # check if all letters are counted at least k
-                    # v==0 means this letter does not exist in the substring
-                    if all([v == 0 or v >= k for v in count.values()]):
+                    if all([v >= k for v in count.values()]):
                         res = max(res, right - left + 1)
 
         return res
 
 
-print(Solution().longestSubstring(s="aaabb", k=3))
+print(Solution().longestSubstring(s="ababbc", k=2))

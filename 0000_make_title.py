@@ -6,7 +6,7 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("395. Longest Substring with At Least K Repeating Characters"))
+print(make_title("400. Nth Digit"))
 
 
 def make_title_for_blog(s):
