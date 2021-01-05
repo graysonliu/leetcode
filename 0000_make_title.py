@@ -6,7 +6,7 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("99. Recover Binary Search Tree"))
+print(make_title("494. Target Sum"))
 
 
 def make_title_for_blog(s):
