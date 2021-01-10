@@ -14,14 +14,14 @@ from typing import List
 
 class Solution:
     def maxSubArray(self, nums: List[int]) -> int:
-        # Kadane's algorithm
-        s = nums[0]
-        s_max = nums[0]
-        for num in nums[1:]:
-            s = max(num, num + s)  # s is the largest sum among all subarrays that has nums as the end
-            s_max = max(s, s_max)
+        # DP
+        # dp[i] is the max summation of any subarrays that end with item nums[i]
+        # then, we have dp[i] = max(dp[i-1] + nums[i], nums[i])
+        dp = nums.copy()  # assign nums[i] to dp[i]
+        for i in range(1, len(nums)):
+            dp[i] = max(dp[i], dp[i - 1] + nums[i])
 
-        return s_max
+        return max(dp)
 
 
 print(Solution().maxSubArray([-2, 1, -3, 4, -1, 2, 1, -5, 4]))

@@ -6,7 +6,7 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("354. Russian Doll Envelopes"))
+print(make_title("518. Coin Change 2"))
 
 
 def make_title_for_blog(s):

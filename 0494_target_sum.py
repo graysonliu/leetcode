@@ -72,7 +72,7 @@ class Solution:
         summation = sum(nums)
         if S > summation or (S + summation) % 2 == 1:
             return 0  # no solution
-        return dp(len(nums) - 1, (S + summation) / 2)
+        return dp(len(nums) - 1, (S + summation) // 2)
 
 
 print(Solution().findTargetSumWays([1, 1, 1, 1, 1], 3))
