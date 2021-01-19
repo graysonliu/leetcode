@@ -6,7 +6,7 @@ def make_title(s):
     return '_'.join(''.join(s).split())
 
 
-print(make_title("518. Coin Change 2"))
+print(make_title("405. Convert a Number to Hexadecimal"))
 
 
 def make_title_for_blog(s):
@@ -15,4 +15,4 @@ def make_title_for_blog(s):
     return str(date.today()) + '-' + '-'.join(''.join(s).split())
 
 
-print(make_title_for_blog('Some Random Stuff on Javascript'))
+print(make_title_for_blog('Set Up HTTPS for a Koa.js Server Using LetsEncrypt (Certbot)'))

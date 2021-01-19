@@ -18,6 +18,9 @@
 # 1 <= nums.length <= 200
 # 1 <= nums[i] <= 100
 
+from typing import List
+
+
 class Solution:
     def canPartition(self, nums: List[int]) -> bool:
         # subset problem
@@ -42,3 +45,6 @@ class Solution:
         if S % 2 == 1:
             return False
         return dp(len(nums) - 1, S // 2)
+
+
+print(Solution().canPartition([1, 2, 3, 5]))
